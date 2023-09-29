@@ -6,10 +6,11 @@
     <title>Relógio</title>
 </head>
 <body>
-    <h1 id="mostrador"></h1>
+    <h1 id="painelDeHorario"></h1>
 
     <script>
-        const dataAtual = new Date();
+        // const mostrador = document.getElementById("mostrador");
+        const mostrador = document.querySelector("#painelDeHorario");
 
         // recebe um inteiro
         // se for menor que 10, concatena 0 na frente
@@ -28,13 +29,18 @@
             return `${hora}:${minuto}:${segundo}`;
         }
 
-        const horaFormatada = formataHora(
-            corrigeHorario(dataAtual.getHours()),
-            corrigeHorario(dataAtual.getMinutes()),
-            corrigeHorario(dataAtual.getSeconds())
-        );
+        setInterval(function(){
+            const dataAtual = new Date();
 
-        console.log(horaFormatada);
+            const horaFormatada = formataHora(
+                corrigeHorario(dataAtual.getHours()),
+                corrigeHorario(dataAtual.getMinutes()),
+                corrigeHorario(dataAtual.getSeconds())
+            );
+
+            // console.log(horaFormatada);
+            mostrador.textContent = horaFormatada;
+        }, 1000);
     </script>
 </body>
 </html>
