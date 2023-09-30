@@ -6,35 +6,42 @@
     <title>Busca CEP</title>
 </head>
 <body>
-    <form>
+    <form id="formBuscaCep">
         <input type="text" id="txtCep">
     </form>
 
     <script>
-        const resultado = fetch('https://viacep.com.br/ws/99052360/json/');
+        const formBuscaCep = document.querySelector("#formBuscaCep");
+
+        formBuscaCep.addEventListener('submit', buscarCep);
+
+        function buscarCep(evento) {
+            evento.preventDefault();
+
+            const resultado = fetch(`https://viacep.com.br/ws/${formBuscaCep.txtCep.value}/json/`);
         
-        function funcionou(res) {
-            console.log('funcionou', res);
-            return res.json();
+            function funcionou(res) {
+                console.log('funcionou', res);
+                return res.json();
+            }
+
+            function recebeDados(dadosCep) {
+                const { localidade, uf } = dadosCep;
+
+                console.log('Dados do CEP', dadosCep);
+                console.log('Cidade', localidade);
+                console.log('Estado', uf);
+            }
+
+            function deuErro(erro) {
+                console.log('erro', erro);
+            }
+
+            resultado
+                .then(funcionou)
+                .then(recebeDados)
+                .catch(deuErro);
         }
-
-        function recebeDados(dadosCep) {
-            const { localidade, uf } = dadosCep;
-
-            console.log('Dados do CEP', dadosCep);
-            console.log('Cidade', localidade);
-            console.log('Estado', uf);
-        }
-
-        function deuErro(erro) {
-            console.log('erro', erro);
-        }
-
-        resultado
-            .then(funcionou)
-            .then(recebeDados)
-            .catch(deuErro);
-
     </script>
 </body>
 </html>
