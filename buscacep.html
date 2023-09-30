@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca CEP</title>
+</head>
+<body>
+    <form>
+        <input type="text" id="txtCep">
+    </form>
+
+    <script>
+        const resultado = fetch('https://viacep.com.br/ws/99052360/json/');
+        
+        function funcionou(res) {
+            console.log('funcionou', res);
+            return res.json();
+        }
+
+        function recebeDados(dadosCep) {
+            const { localidade, uf } = dadosCep;
+
+            console.log('Dados do CEP', dadosCep);
+            console.log('Cidade', localidade);
+            console.log('Estado', uf);
+        }
+
+        function deuErro(erro) {
+            console.log('erro', erro);
+        }
+
+        resultado
+            .then(funcionou)
+            .then(recebeDados)
+            .catch(deuErro);
+
+    </script>
+</body>
+</html>
